@@ -36,4 +36,12 @@ class YourClassTest {
     }
 }
 
+Mockito.verify(logger, Mockito.times(1)).info("DC_TRACKER_API: mockedProperties");
 
+        Mockito.verify(logger, Mockito.times(1)).debug("results after getBDFBindInfo api call:: " + expectedResults);
+
+        Assertions.assertEquals(expectedResults, actualResults);
+
+    }
+
+}
