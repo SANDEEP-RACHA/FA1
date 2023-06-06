@@ -1,0 +1,46 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+public class YourTestClassTest {
+
+    @Test
+    public void deleteStakeholders_WithValidRequest_ShouldReturnSuccessResponse() {
+        // Arrange
+        DeleteStakeholderRequest request = new DeleteStakeholderRequest();
+        // Set up the necessary properties in the request object
+        
+        YourTestClass yourTestClass = new YourTestClass();
+        YourTestClass spy = spy(yourTestClass);
+        
+        // Mock the dependencies (e.g., jdbcTemplate, LOGGER) if necessary
+        
+        // Act
+        Response response = spy.deleteStakeholders(request);
+        
+        // Assert
+        assertEquals("Success", response.getMessage());
+        assertEquals("200", response.getStatus());
+        // Add additional assertions as needed
+    }
+
+    @Test
+    public void deleteStakeholders_WithInvalidRequest_ShouldReturnFailureResponse() {
+        // Arrange
+        DeleteStakeholderRequest request = new DeleteStakeholderRequest();
+        // Set up an invalid request object
+        
+        YourTestClass yourTestClass = new YourTestClass();
+        YourTestClass spy = spy(yourTestClass);
+        
+        // Mock the dependencies (e.g., jdbcTemplate, LOGGER) if necessary
+        
+        // Act
+        Response response = spy.deleteStakeholders(request);
+        
+        // Assert
+        assertEquals("Failure", response.getMessage());
+        assertEquals("200", response.getStatus());
+        // Add additional assertions as needed
+    }
+}
