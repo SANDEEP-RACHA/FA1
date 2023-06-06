@@ -1,0 +1,28 @@
+import org.json.JSONObject;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class UserIdTest {
+
+    @Test
+    public void testUserId() {
+        // Create an instance of the class under test
+        YourClass yourClass = new YourClass();
+
+        // Define the input parameter
+        String cili = "123456789";
+
+        // Invoke the method
+        JSONObject result = yourClass.userid(cili);
+
+        // Assert the expected values
+        Assertions.assertEquals("expected_value", result.getString("INFRA ENGR ASSOCIATE_ID"));
+        Assertions.assertEquals("expected_value", result.getString("PS_MANAGER_ID"));
+        Assertions.assertEquals("expected_value", result.getString("PS PLANNER_ID"));
+        Assertions.assertEquals("expected_value", result.getString("INFRA ENGR MANAGER_ID"));
+        Assertions.assertEquals("expected_value", result.getString("ASSIGNMENT REVIEWER_ID"));
+        Assertions.assertEquals("expected_value", result.getString("POWER ENGR ASSOCIATE_ID"));
+        Assertions.assertEquals("expected_value", result.getString("POWER PLANT REVIEWER_ID"));
+        Assertions.assertEquals("expected_value", result.getString("HVAC ENGINEER_ID"));
+    }
+}
