@@ -1,0 +1,37 @@
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.List;
+
+class YourClassTest {
+
+    @Test
+    void bdfbdataTest() throws Exception {
+        // Mocking dependencies
+        PscServicesService pscServicesService = Mockito.mock(PscServicesService.class);
+        WirelineService wirelineService = Mockito.mock(WirelineService.class);
+        Logger logger = Mockito.mock(Logger.class);
+
+        // Creating test data
+        String bdfbname = "testBDFBName";
+        List<String> sublocations = Arrays.asList("sub1", "sub2");
+        String expectedResults = "expectedResults";
+
+        // Setting up mock behavior
+        Mockito.when(pscServicesService.getProperty("Detrackur1")).thenReturn("mockedProperties");
+        Mockito.when(wirelineService.getDetailsBDFBRes(Mockito.anyString(), Mockito.anyString(), Mockito.anyList())).thenReturn(expectedResults);
+
+        // Creating an instance of the class under test
+        YourClass yourClass = new YourClass(pscServicesService, wirelineService, logger);
+
+        // Calling the method to be tested
+        String actualResults = yourClass.bdfbdata(bdfbname, sublocations);
+
+        // Verifying the interactions and assertions
+        Mockito.verify(logger).info("DC_TRACKER_API:" + "mockedProperties");
+        Mockito.verify(logger).debug("results after getBDFBindInfo api call:: " + expectedResults);
+        Assertions.assertEquals(expectedResults, actualResults);
+    }
+}
