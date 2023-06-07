@@ -1,35 +1,30 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
 
-class YourClassNameTest {
-    @Mock
-    private JdbcTemplate jdbcTemplate;
-
-    @InjectMocks
-    private YourClassName yourClass;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+public class LocationDetailsTest {
 
     @Test
-    void testGetInServiceDate() {
-        // Mock the behavior of the JdbcTemplate queryForRowSet method
-        String expectedDate = "2023-06-07";
-        SqlRowSet mockRowSet = Mockito.mock(SqlRowSet.class);
-        Mockito.when(jdbcTemplate.queryForRowSet(Mockito.anyString())).thenReturn(mockRowSet);
-        Mockito.when(mockRowSet.next()).thenReturn(true);
-        Mockito.when(mockRowSet.getString(Mockito.anyString())).thenReturn(expectedDate);
+    public void testGetLocationDetailsByNfid() {
+        // Create a sample input JSON object
+        JSONObject inputJson = new JSONObject();
+        inputJson.put("nfId", "12345");
 
-        // Call the method and assert the result
-        String result = yourClass.getInServiceDate("pscJobId");
-        Assertions.assertEquals(expectedDate, result);
+        // Create an instance of the class containing the method
+        YourClassName yourClass = new YourClassName();
+
+        // Call the method and get the result
+        String result = yourClass.getLocationDetailsbyNfid(inputJson);
+
+        // Assert the expected output based on the input JSON object
+        JSONObject expectedResult = new JSONObject();
+        JSONObject response = new JSONObject();
+        response.put("CLLI", "CLLI123");
+        response.put("LOB", "VZB");
+        response.put("RFT_DATE", "2023-06-07");
+        response.put("SITE_CODE", "SITE123");
+        expectedResult.put("results", response);
+
+        Assert.assertEquals(expectedResult.toString(), result);
     }
 }
