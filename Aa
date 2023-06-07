@@ -1,46 +1,40 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-public class YourTestClassTest {
+public class YourClassTest {
 
-    @Test
-    public void deleteStakeholders_WithValidRequest_ShouldReturnSuccessResponse() {
-        // Arrange
-        DeleteStakeholderRequest request = new DeleteStakeholderRequest();
-        // Set up the necessary properties in the request object
-        
-        YourTestClass yourTestClass = new YourTestClass();
-        YourTestClass spy = spy(yourTestClass);
-        
-        // Mock the dependencies (e.g., jdbcTemplate, LOGGER) if necessary
-        
-        // Act
-        Response response = spy.deleteStakeholders(request);
-        
-        // Assert
-        assertEquals("Success", response.getMessage());
-        assertEquals("200", response.getStatus());
-        // Add additional assertions as needed
+    @Mock
+    private JdbcTemplate jdbcTemplate;
+
+    @InjectMocks
+    private YourClass yourClass;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void deleteStakeholders_WithInvalidRequest_ShouldReturnFailureResponse() {
-        // Arrange
-        DeleteStakeholderRequest request = new DeleteStakeholderRequest();
-        // Set up an invalid request object
-        
-        YourTestClass yourTestClass = new YourTestClass();
-        YourTestClass spy = spy(yourTestClass);
-        
-        // Mock the dependencies (e.g., jdbcTemplate, LOGGER) if necessary
-        
-        // Act
-        Response response = spy.deleteStakeholders(request);
-        
-        // Assert
-        assertEquals("Failure", response.getMessage());
-        assertEquals("200", response.getStatus());
-        // Add additional assertions as needed
+    public void testGetPscJobData() {
+        int pscJobId = 123;
+
+        // Mock the queryForObject method to return a specific result
+        String expectedPscJobDetails = "SiteABC";
+        Mockito.when(jdbcTemplate.queryForObject(Mockito.anyString(), Mockito.any(Object[].class), Mockito.eq(String.class)))
+                .thenReturn(expectedPscJobDetails);
+
+        String result = yourClass.getPscJobData(pscJobId);
+
+        // Verify that the queryForObject method was called with the correct arguments
+        Mockito.verify(jdbcTemplate).queryForObject("select site_code from psc_requests where psc_job_id =?", new Object[]{pscJobId}, String.class);
+
+        // Verify that the result is the expected value
+        Assert.assertEquals(expectedPscJobDetails, result);
     }
 }
