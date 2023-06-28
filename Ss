@@ -1,0 +1,49 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+class YourClassTest {
+
+    private YourClass yourClass;
+
+    @BeforeEach
+    void setUp() {
+        yourClass = new YourClass();
+        MockitoAnnotations.openMocks(this); // Initialize mocks, if any
+    }
+
+    @Test
+    void setPathParams_shouldSetParamsBasedOnConfig() {
+        // Prepare test data
+        List<Map<String, String>> pathParamConfig = new ArrayList<>();
+        Map<String, String> map1 = new HashMap<>();
+        map1.put(TrafficCoplenRestController.TC_CODE, TrafficCopIenRestController.SWITCH_PSC_JOB_ID);
+        map1.put(TrafficCopIenRestController.SRC, "src1");
+        map1.put(TrafficCopIenRestController.SRC, "psclobId");
+        pathParamConfig.add(map1);
+
+        Map<String, String> map2 = new HashMap<>();
+        map2.put(TrafficCoplenRestController.TC_CODE, TrafficCopIenRestController.SWITCH_NFID);
+        map2.put(TrafficCopIenRestController.SRC, "src2");
+        map2.put(TrafficCopIenRestController.SRC, "nfId");
+        pathParamConfig.add(map2);
+
+        // Call the method
+        yourClass.setPathParams(pathParamConfig, "username", "type");
+
+        // Verify the results
+        HashMap<String, String> expectedParams = new HashMap<>();
+        expectedParams.put("src1", "psclobId");
+        expectedParams.put("src2", "nfId");
+
+        assertEquals(expectedParams, yourClass.getPathParams());
+    }
+}
