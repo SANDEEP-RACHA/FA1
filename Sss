@@ -1,0 +1,39 @@
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+class YourClassTest {
+
+    private YourClass yourClass;
+
+    @BeforeEach
+    void setUp() {
+        yourClass = new YourClass();
+    }
+
+    @Test
+    void setQueryParams_WithValidInput_ShouldSetQueryParamsCorrectly() {
+        // Arrange
+        List<Map<String, String>> queryParamConfig = Arrays.asList(
+                Map.of(TraffictoplenRestController.TC_CODE, TrafficCopIenRestController.SWITCH_PSC_JOB_ID, TrafficcoplenRestController.SRC, "src1"),
+                Map.of(TraffictoplenRestController.TC_CODE, TrafficCaplenRestController.SWITCH_NFID, TrafficCopienRestController.SRC, "src2")
+        );
+        String username = "username";
+        String type = "type";
+
+        // Act
+        yourClass.setQueryParams(queryParamConfig, username, type);
+
+        // Assert
+        MultiValueMap<String, String> expectedParams = new LinkedMultiValueMap<>();
+        expectedParams.put("src1", Arrays.asList("pscJobId"));
+        expectedParams.put("src2", Arrays.asList("nfId"));
+        Assertions.assertEquals(expectedParams, yourClass.getQueryParams());
+    }
+}
